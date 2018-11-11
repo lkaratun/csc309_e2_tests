@@ -79,12 +79,12 @@ module.exports = function(document) {
   /* Event listeners for button submit and button click */
 
   myForm.addEventListener("submit", addNewBookToBookList);
-  // bookLoanForm.addEventListener("submit", loanBookToPatron);
-  // patronAddForm.addEventListener("submit", addNewPatron);
-  // bookInfoForm.addEventListener("submit", getBookInfo);
+  bookLoanForm.addEventListener("submit", loanBookToPatron);
+  patronAddForm.addEventListener("submit", addNewPatron);
+  bookInfoForm.addEventListener("submit", getBookInfo);
 
-  // /* Listen for click patron entries - will have to check if it is a return button in returnBookToLibrary */
-  // patronEntries.addEventListener("click", returnBookToLibrary);
+  /* Listen for click patron entries - will have to check if it is a return button in returnBookToLibrary */
+  patronEntries.addEventListener("click", returnBookToLibrary);
 
   /*-----------------------------------------------------------*/
   /* End of starter code - do *not* edit the code above. */
@@ -156,7 +156,6 @@ module.exports = function(document) {
 
   // Adds a book to the library table.
   function addBookToLibraryTable(book) {
-    console.log(book);
     const properties = ["bookId", "title", "patron"];
     const textNodes = properties.map(property =>
       document.createTextNode(
@@ -171,7 +170,6 @@ module.exports = function(document) {
       acc.push(cell);
       return acc;
     }, []);
-    console.log(cells);
     const row = document.createElement("tr");
     cells.forEach(cell => row.appendChild(cell));
     document.querySelector("#bookTable tbody").appendChild(row);
@@ -204,5 +202,5 @@ module.exports = function(document) {
     // Add code here
   }
 
-  return { libraryBooks, patrons };
+  return { libraryBooks, patrons, addNewBookToBookList };
 };
