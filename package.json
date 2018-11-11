@@ -1,0 +1,36 @@
+{
+  "name": "e2_starter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "e2_library.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.1.5",
+    "@babel/preset-env": "^7.1.5",
+    "@cypress/webpack-preprocessor": "^4.0.0",
+    "babel-loader": "^8.0.4",
+    "coffeescript": "^2.3.2",
+    "cypress": "^3.1.1",
+    "jest": "^23.6.0",
+    "jsdom": "^13.0.0",
+    "rewire": "^4.0.1",
+    "rewire-webpack": "^1.0.1",
+    "webpack": "^4.25.1"
+  },
+  "scripts": {
+    "test": "jest --detectOpenHandles",
+    "cypress-run": ".\\node_modules\\.bin\\cypress.cmd run",
+    "cypress-open": ".\\node_modules\\.bin\\cypress.cmd open"
+  },
+  "jest": {
+    "watchPathIgnorePatterns": [
+      "cypress/*"
+    ],
+    "testPathIgnorePatterns": [
+      "cypress/*"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
