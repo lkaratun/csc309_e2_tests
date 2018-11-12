@@ -146,9 +146,15 @@ module.exports = function(document) {
   function getBookInfo(e) {
     e.preventDefault();
 
-    // Get correct book
+    // Get the correct book object.
+    const requestedIdInput = document.querySelector("#bookInfoId");
+    const requestedBookId = parseInt(requestedIdInput.value);
+    const requestedBook = libraryBooks[requestedBookId];
 
     // Call displayBookInfo()
+    displayBookInfo(requestedBook);
+    // Reset input field values.
+    requestedIdInput.value = "";
   }
 
   /*-----------------------------------------------------------*/
@@ -177,7 +183,25 @@ module.exports = function(document) {
 
   // Displays detailed info on the book in the Book Info Section
   function displayBookInfo(book) {
-    // Add code here
+    console.log(book);
+    // Define attributes of the patron to display on the webpage.
+    const patronStr = book.patron == null ? "N/A" : book.patron.name;
+    const orderedContents = [
+      book.bookId,
+      book.title,
+      book.author,
+      book.genre,
+      patronStr
+    ];
+
+    // Replace the book info text on the page with info about the requested book.
+    for (let i = 0; i < orderedContents.length; i++) {
+      let elementWrapper = bookInfo.children[i];
+      // Write into the span element inside the wrapper p.
+      let elementContent = elementWrapper.children[0];
+      elementContent.innerText = orderedContents[i];
+    }
+    // console.log(bookInfo.children[1].innerText);
   }
 
   // Adds a book to a patron's book list with a status of 'Within due date'.
@@ -202,5 +226,21 @@ module.exports = function(document) {
     // Add code here
   }
 
-  return { libraryBooks, patrons, addNewBookToBookList };
+  return {
+    libraryBooks,
+    patrons,
+    Book,
+    Patron,
+    addNewBookToBookList,
+    loanBookToPatron,
+    returnBookToLibrary,
+    addNewPatron,
+    getBookInfo,
+    addBookToLibraryTable,
+    displayBookInfo,
+    addBookToPatronLoans,
+    addNewPatronEntry,
+    removeBookFromPatronTable,
+    changeToOverdue
+  };
 };
