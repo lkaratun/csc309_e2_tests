@@ -138,8 +138,16 @@ module.exports = function(document) {
     e.preventDefault();
 
     // Add a new patron to global array
-
+    const nameInput = document.querySelector("#newPatronName");
+    const name = nameInput.value;
+    const newPatron = new Patron(name);
+  
+    patrons.push(newPatron);
+  
     // Call addNewPatronEntry() to add patron to the DOM
+    addNewPatronEntry(newPatron);
+    // Reset input field values.
+    nameInput.value = "";
   }
 
   // Gets book info and then displays

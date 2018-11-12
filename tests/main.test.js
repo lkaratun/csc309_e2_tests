@@ -19,7 +19,15 @@ describe("app", () => {
   it("libraryBooks initially has 3 entries", () => {
     expect(app.libraryBooks).toHaveLength(3);
   });
-  it("addNewBookToBookList adds an entry to the libraryBooks array", () => {
+});
+describe("addNewBookToBookList", () => {
+  beforeEach(async () => {
+    const dom = await JSDOM.fromFile("e2_library.html");
+    ({ document } = dom.window);
+    app = require("../e2_library")(document);
+  });
+
+  it("adds an entry to the libraryBooks array", () => {
     const myForm = document.querySelector("#bookAddForm");
     myForm.querySelector("#newBookName").value = "Test name";
     myForm.querySelector("#newBookAuthor").value = "Test author";
@@ -48,33 +56,24 @@ describe("app", () => {
     app.addNewBookToBookList(e);
     expect(app.libraryBooks[3].patron).toBe(null);
   });
-
-
 });
 
-describe("bookInfoForm", () => {
+describe("addNewPatron", () => {
   beforeEach(async () => {
     const dom = await JSDOM.fromFile("e2_library.html");
     ({ document } = dom.window);
     app = require("../e2_library")(document);
+    const patronForm = document.querySelector("#patronAddForm");
+    patronForm.querySelector("#newPatronName").value = "Test patron";
+    app.addNewPatron(e);
   });
-  it("getBookInfo resets the text input value", () => {
-    const input = document.querySelector("#bookInfoId");
-    input.value = 0;
-    app.getBookInfo(e);
-    expect(input.value).toBe("");
+  it("adds an entry to the patrons array", () => {
+    expect(app.patrons).toHaveLength(3);
+    expect(typeof app.patrons[2]).toBe("object");
+    expect(app.patrons[2] instanceof app.Patron).toBeTruthy();
   });
-  it("displayBookInfo doesn't add new elements to the DOM", () => {
-    app.displayBookInfo(new app.Book("Harry Potter", "J.K. Rowling", "Fantasy"));
-    const bookInfo = document.querySelector("#bookInfo");
-    expect(bookInfo.children).toHaveLength(5);
+  it("new entry in the patrons array has correct properties", () => {
+    expect(app.patrons[2].name).toBe("Test patron");
+    expect(app.patrons[2].cardNumber).toBe(2);
   });
-  it("displayBookInfo updates DOM correctly", () => {
-    app.displayBookInfo(new app.Book("Harry Potter", "J.K. Rowling", "Fantasy"));
-    const bookInfo = document.querySelector("#bookInfo");
-    // expect(bookInfo.children[0].textContent).toMatch(/2/);
-    expect(bookInfo.children[1].innerHTML).toMatch(/Harry Potter/);
-    expect(bookInfo.children[2].innerHTML).toMatch(/J\.K\. Rowling/);
-    expect(bookInfo.children[3].innerHTML).toMatch(/Fantasy/);
-  });
-})
+});
